@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "RedditShredder": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "LOG_LEVEL": "TRACE"
+      },
+      "hotReloadEnabled": false
+    }
+  }
+}
