@@ -6,6 +6,11 @@ Features:
 - Edit existing comments and self-posts with random content that appears to be valid text (reduces the usefulness of the data when being sold to a third-party). The random content is stable - meaning this script can be continued if stopped.
 - Rate-limiting handling.
 - Multi-threaded (defaults to number of CPU's).
+- Multi-platform (Windows, OSX, and Linux).
+
+## Releases
+
+Releases can be download from the [Releases page](https://github.com/Silvenga/RedditShredder/releases/latest).
 
 ## Usage
 
@@ -20,7 +25,7 @@ Features:
 For example:
 
 ```
-./RedditShredder --client-id <client-id> --client-secret <client-secret> --refresh-token <refresh-token>
+./reddit-shredder --client-id <client-id> --client-secret <client-secret> --refresh-token <refresh-token>
 ```
 
 ## Getting Client Id/Secret and Refresh Tokens
