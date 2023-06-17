@@ -1,0 +1,52 @@
+name: "Build"
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    tags:
+    - '*'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        build:
+          - runtime: linux-x64
+            image: ubuntu-latest
+            published:
+              source: RedditShredder
+              destination: reddit-shredder-linux-x64
+          - runtime: win-x64
+            image: windows-latest
+            published:
+              source: RedditShredder.exe
+              destination: reddit-shredder-win-x64.exe
+    runs-on: ${{ matrix.build.image }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+      - run: dotnet build -c Release
+      - run: dotnet test -c Release
+      - run: dotnet publish -c Release -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained --runtime ${{ matrix.build.runtime }} -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
+      - run: mv ./publish/${{ matrix.build.published.source }} ./publish/${{ matrix.build.published.destination }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: publish
+          path: ./publish/${{ matrix.build.published.destination }}
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: publish
+          path: ./publish
+      - name: Publish
+        uses: ncipollo/release-action@v1.8.4
+        with:
+          artifacts: ./publish/*
+          token: ${{ secrets.GITHUB_TOKEN }}
