@@ -17,5 +17,8 @@ namespace RedditShredder
 
         [Option('v', "verbose", HelpText = "Enable verbose logging.")]
         public bool Verbose { get; set; }
+
+        [Option("footer", HelpText = "Any footer to add to the end of generated content.")]
+        public string? Footer { get; set; }
     }
 }
