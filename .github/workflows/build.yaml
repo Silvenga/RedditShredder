@@ -46,7 +46,7 @@ jobs:
           name: publish
           path: ./publish
       - name: Publish
-        uses: ncipollo/release-action@v1.8.4
+        uses: ncipollo/release-action@v1.12.0
         with:
           artifacts: ./publish/*
           token: ${{ secrets.GITHUB_TOKEN }}
