@@ -37,7 +37,7 @@ jobs:
       - run: dotnet test -c Release
       - run: dotnet publish -c Release -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:UseAppHost=true -p:PublishTrimmed=false --self-contained --runtime ${{ matrix.build.runtime }} -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
       - run: mv ./publish/${{ matrix.build.published.source }} ./publish/${{ matrix.build.published.destination }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: publish
           path: ./publish/${{ matrix.build.published.destination }}
